@@ -13,7 +13,7 @@ function App() {
   const [error, setError] = useState('');
   const [enhancementLevel, setEnhancementLevel] = useState('default');
 
-  // Debounce and fetch suggestions as the user types
+  
   useEffect(() => {
     const getSuggestions = async () => {
       if (!inputText.trim()) {
@@ -29,7 +29,7 @@ Highlight grammatical errors if present.`;
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text = response.text();
-        // Split the result into separate suggestions (filtering out any empty lines)
+        
         const suggestionList = text.split('\n').map(s => s.trim()).filter(Boolean);
         setSuggestions(suggestionList);
         setError('');
@@ -43,12 +43,12 @@ Highlight grammatical errors if present.`;
 
     const timeoutId = setTimeout(() => {
       getSuggestions();
-    }, 1000); // 1 second debounce
+    }, 1000);
 
     return () => clearTimeout(timeoutId);
   }, [inputText]);
 
-  // Enhance the text using the AI model
+  
   const enhanceText = async () => {
     if (!inputText.trim()) return;
 
@@ -72,10 +72,10 @@ Return only the enhanced text without additional commentary.`;
     }
   };
 
-  // When clicking on a suggestion, replace the entire text in the textarea
+  
   const handleSuggestionClick = useCallback((suggestion) => {
     setInputText(suggestion.trim());
-    setSuggestions([]); // Optionally clear suggestions after click
+    setSuggestions([]);
   }, []);
 
   return (
